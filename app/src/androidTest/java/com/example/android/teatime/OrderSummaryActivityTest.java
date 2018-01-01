@@ -16,11 +16,18 @@
 
 package com.example.android.teatime;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
+import static org.hamcrest.core.IsNot.not;
 
 // TODO (1) Add annotation to specify AndroidJUnitRunner class as the default test runner
 @RunWith(AndroidJUnit4.class)
@@ -34,11 +41,10 @@ public class OrderSummaryActivityTest {
 
     // TODO (3) Finish this method which runs before each test and will stub all external
     // intents so all external intents will be blocked
-
+    @Before
     public void stubAllExternalIntents() {
-
+        intending(not(isInternal())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
     }
-
 
     // TODO (4) Finish this method which verifies that the intent sent by clicking the send email
     // button matches the intent sent by the application
